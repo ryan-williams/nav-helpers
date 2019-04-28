@@ -13,7 +13,7 @@ alias pop="popd"
 alias P="pushd"
 alias b="popd"
 
-alias mcd=multi-cd
+defn mcd multi-cd
 
 defn md mkdir -p
 defn mkd mkdir -p
@@ -21,6 +21,38 @@ defn mdp mkdir -p
 defn mdn mkdir-dirname
 
 defn mpd mkdir-p-dirname
+
+multi-cd() {
+	if [ $# -ne 1 ]; then
+		echo "Usage: $0 <dir>" >&2
+		return 1
+	fi
+	if [ -d "$1" ]; then
+	    cd "$1"
+	else
+	    files=$(ls -Ad "*$1*")
+	    if [ "$(count $files)" == "1" ]; then
+	        cd $files
+	    else
+	        echo 'select:'
+	        select filename in $files; do
+	            cd $filename
+	            break
+	        done
+	    fi
+	fi
+}
+export -f multi-cd
+
+mkdir-p-cd() {
+	if [ $# -ne 1 ]; then
+		echo "Usage: $0 <dir>" >&2
+		return 1
+	fi
+	dir="$1"
+	mkdir -p "$dir" && cd "$dir"
+}
+export -f mkdir-p-cd
 
 defn mdc mkdir-p-cd
 
