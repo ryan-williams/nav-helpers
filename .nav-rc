@@ -22,7 +22,7 @@ defn mdn mkdir-dirname
 
 defn mpd mkdir-p-dirname
 
-multi-cd() {
+multi_cd() {
 	if [ $# -ne 1 ]; then
 		echo "Usage: $0 <dir>" >&2
 		return 1
@@ -42,9 +42,9 @@ multi-cd() {
 	    fi
 	fi
 }
-export -f multi-cd
+export -f multi_cd
 
-mkdir-p-cd() {
+mkdir_p_cd() {
 	if [ $# -ne 1 ]; then
 		echo "Usage: $0 <dir>" >&2
 		return 1
@@ -52,9 +52,9 @@ mkdir-p-cd() {
 	dir="$1"
 	mkdir -p "$dir" && cd "$dir"
 }
-export -f mkdir-p-cd
+export -f mkdir_p_cd
 
-defn mdc mkdir-p-cd
+defn mdc mkdir_p_cd
 
 cdn() {
   cd "$(dn "$@")"
