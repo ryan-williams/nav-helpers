@@ -20,6 +20,13 @@ defn mkd mkdir -p
 defn mdp mkdir -p
 defn mdn mkdir-dirname
 
+mvp() {
+  last=${@: -1}
+  mkdir -p "$(dirname "$(realpath -sm $last)")"
+  mv "$@"
+}
+export -f mvp
+
 defn mpd mkdir-p-dirname
 
 multi_cd() {
