@@ -61,6 +61,7 @@ mkdir_p_cd() {
 }
 export -f mkdir_p_cd
 
+defn cdm mkdir_p_cd
 defn mdc mkdir_p_cd
 
 cdn() {
