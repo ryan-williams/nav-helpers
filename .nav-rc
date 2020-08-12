@@ -3,6 +3,11 @@
 # Navigation aliases
 alias cdp="cd $PWD"
 
+parent() {
+  echo "$(cd .. && echo $PWD)"
+}
+export -f parent
+
 alias u="cd .."
 alias uu="cd ../.."
 alias uuu="cd ../../.."
