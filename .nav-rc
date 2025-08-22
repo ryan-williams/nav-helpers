@@ -8,7 +8,33 @@ parent() {
 }
 export -f parent
 
-alias u="cd .."
+# cd .. with autocomplete
+# Need to unalias u if it exists, as aliases take precedence over functions
+if alias u &>/dev/null; then
+    unalias u
+fi
+
+u() {
+    if [ $# -eq 0 ]; then
+        cd ..
+    else
+        cd "../$1"
+    fi
+}
+
+# Autocomplete for u - shows directories in parent directory
+_u_complete() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local parent_dir=".."
+
+    # Get directories in parent directory
+    local dirs=$(cd "$parent_dir" 2>/dev/null && compgen -d -- "$cur")
+
+    COMPREPLY=( $dirs )
+}
+
+complete -F _u_complete u
+
 alias uu="cd ../.."
 alias uuu="cd ../../.."
 alias uuuu="cd ../../../.."
