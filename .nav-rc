@@ -35,7 +35,28 @@ _u_complete() {
 
 complete -F _u_complete u
 
-alias uu="cd ../.."
+# cd ../.. with autocomplete
+uu() {
+    if [ $# -eq 0 ]; then
+        cd ../..
+    else
+        cd "../../$1"
+    fi
+}
+
+# Autocomplete for uu - shows directories in parent's parent directory
+_uu_complete() {
+    local cur="${COMP_WORDS[COMP_CWORD]}"
+    local parent_dir="../.."
+
+    # Get directories in parent's parent directory
+    local dirs=$(cd "$parent_dir" 2>/dev/null && compgen -d -- "$cur")
+
+    COMPREPLY=( $dirs )
+}
+
+complete -F _uu_complete uu
+
 alias uuu="cd ../../.."
 alias uuuu="cd ../../../.."
 
